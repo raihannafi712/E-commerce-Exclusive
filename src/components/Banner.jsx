@@ -16,6 +16,7 @@ import ban5 from '../assets/head2.jpg';
 const Banner = () => {
     const settings = {
         dots: true,
+        arrows: false,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -29,36 +30,36 @@ const Banner = () => {
         <Container>
             <div className="flex justify-between">
                 <div className="w-[20%] ">
-                    <ul className="border-r-gray-300 border-r-[1px] border-solid font-pop font-normal text-[16px] text-black  ">
+                    <ul className="border-r-gray-300 border-r-[1px] border-solid font-pop font-normal text-[16px] text-black pb-[0px]  ">
                         <li className='pt-[48px] py-[8px] hover:font-bold ease-in-out duration-200 '>
                             <a href="#" className="flex items-center ">
                                 Woman’s Fashion <MdOutlineKeyboardArrowRight />
                             </a>
                         </li>
-                        <li className=" flex py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className=" flex py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#" className="flex items-center">
                                 Men’s Fashion <MdOutlineKeyboardArrowRight />
                             </a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Electronics</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Home & Lifestyle</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Medicine</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Sports & Outdoor</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Baby’s & Toys</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Groceries & Pets</a>
                         </li>
-                        <li className="py-[8px] hover:font-bold ease-in-out duration-200 ">
+                        <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Health & Beauty</a>
                         </li>
                     </ul>

@@ -7,7 +7,6 @@ import ContactPage from './pages/ContactPage';
 import AboutPage from "./pages/AboutPage";
 import SignupPage from "./pages/SignupPage";
 
-
 let routerVar = createBrowserRouter(createRoutesFromElements(
 
   <>
@@ -19,9 +18,7 @@ let routerVar = createBrowserRouter(createRoutesFromElements(
       <Route path="/signup" element={<SignupPage/>}></Route>
     </Route>
     <Route path="*" element={<ErrorPage/>}></Route>         
-
   </>
-
 ))
 
 function App() {
