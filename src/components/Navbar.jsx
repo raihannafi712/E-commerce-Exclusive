@@ -79,13 +79,19 @@ const Navbar = () => {
           </div>
           <div className="w-[30%] md:order-3 flex justify-end items-center gap-5 text-[26px] ">
             <div className="cursor-pointer">
-              <FaRegHeart />
+              <Link to="/wishlist">
+                <FaRegHeart />            
+              </Link>
             </div>
             <div className="cursor-pointer">
-              <IoCartOutline />
+              <Link to="/cart">
+                <IoCartOutline />
+              </Link>
             </div>
             <div className="cursor-pointer">
-              <FaUserCircle />
+              <Link to="/accounts">
+                <FaUserCircle />
+              </Link>             
             </div>               
           </div>
         </div>

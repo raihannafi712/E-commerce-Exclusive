@@ -3,6 +3,7 @@ import Container from "./Container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import './css/banner.css';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
@@ -64,7 +65,7 @@ const Banner = () => {
                         </li>
                     </ul>
                 </div>                    
-                <div className="w-[70%]">
+                <div className="w-[70%] banner">
                     <Slider {...settings} >    
                         <div>
                             <div className="mt-[48px] bg-black flex justify-between cursor-pointer ">

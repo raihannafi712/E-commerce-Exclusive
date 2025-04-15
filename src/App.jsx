@@ -6,6 +6,9 @@ import Layout from "./components/Layout";
 import ContactPage from './pages/ContactPage';
 import AboutPage from "./pages/AboutPage";
 import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
+import AccountPage from "./pages/AccountPage";
 
 let routerVar = createBrowserRouter(createRoutesFromElements(
 
@@ -16,6 +19,10 @@ let routerVar = createBrowserRouter(createRoutesFromElements(
       <Route path="/contacts" element={<ContactPage/>}></Route>
       <Route path="/about" element={<AboutPage/>}></Route>
       <Route path="/signup" element={<SignupPage/>}></Route>
+      <Route path="/login" element={<LoginPage/>}></Route>
+      <Route path="/wishlist" element={<WishPage/>}></Route>
+      <Route path="/cart" element={<CartPage/>}></Route>
+      <Route path="/accounts" element={<AccountPage/>}></Route>
     </Route>
     <Route path="*" element={<ErrorPage/>}></Route>         
   </>

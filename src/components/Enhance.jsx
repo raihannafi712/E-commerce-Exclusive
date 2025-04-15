@@ -10,7 +10,7 @@ import last4 from '../assets/last4.png';
 import control from '../assets/controller.png';
 import delivery from '../assets/delivery.png';
 import headphone from '../assets/safe.png';
-import safe from '../assets/delivery.png';
+import safe from '../assets/safe.png';
 import Slider from "react-slick";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
@@ -865,7 +865,7 @@ const Enhance = () => {
                     </div>  
                     <div>
                         <div className="flex justify-center">
-                            <img src={delivery} alt="" />
+                            <img src={headphone} alt="" />
                         </div>
                         <h3 className="font-pop font font-semibold text-[20px] pt-[24px] pb-[8px] ">
                             FREE AND FAST DELIVERY
@@ -876,7 +876,7 @@ const Enhance = () => {
                     </div> 
                     <div>
                         <div className="flex justify-center">
-                            <img src={delivery} alt="" />
+                            <img src={safe} alt="" />
                         </div>
                         <h3 className="font-pop font font-semibold text-[20px] pt-[24px] pb-[8px] ">
                             FREE AND FAST DELIVERY

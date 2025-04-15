@@ -31,7 +31,7 @@ const Footer = () => {
               </h3>
               <div>
                 <div className="relative">
-                  <input type="text" id="search-navbar" 
+                  <input type="email" id="search-navbar" 
                     className="block w-full my-[24px] p-2  text-[16px] text-gray-100 border border-white rounded-lg bg-black focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     placeholder="Enter your Email"/>
                   <div className="absolute top-[50%] translate-y-[-50%] right-[4%] text-white text-[20px]">
@@ -152,11 +152,11 @@ const Footer = () => {
             <h3 className="font-pop font-normal text-[12px] text-white ">
               Save $3 with App New User Only
             </h3>
-            <div className="flex justify-between my-[24px] ">
+            <div className="flex justify my-[24px] gap-x-[8px] items-center ">
               <div>
                 <img src={qr} alt="" />
               </div>
-              <div className="">
+              <div className="items-center">
                 <img src={gp} className="mb-[10px] cursor-pointer" alt="" />
                 <img src={ap} className="cursor-pointer" alt="" />
               </div>
