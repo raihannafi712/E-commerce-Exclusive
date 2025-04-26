@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import AccountPage from "./pages/AccountPage";
+import ShopPage from "./pages/ShopPage";
 
 let routerVar = createBrowserRouter(createRoutesFromElements(
 
@@ -23,6 +24,7 @@ let routerVar = createBrowserRouter(createRoutesFromElements(
       <Route path="/wishlist" element={<WishPage/>}></Route>
       <Route path="/cart" element={<CartPage/>}></Route>
       <Route path="/accounts" element={<AccountPage/>}></Route>
+      <Route path="/shop" element={<ShopPage/>}></Route>
     </Route>
     <Route path="*" element={<ErrorPage/>}></Route>         
   </>

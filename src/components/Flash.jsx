@@ -1,4 +1,4 @@
-import React from "react";
+import  { React, useContext } from "react";
 import Container from './Container';
 import Countdown from 'react-countdown';
 import Slider from "react-slick";
@@ -17,17 +17,11 @@ import { MdOutlinePhoneIphone } from "react-icons/md";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 import { BsSmartwatch } from "react-icons/bs";
 import { FaCamera , FaHeadphones  } from "react-icons/fa6";
-
-
-
-
-
-
+import { ApiData } from "./ContextApi";
 
 
 
 // Slider start
-
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -55,9 +49,9 @@ function SamplePrevArrow(props) {
 
 const Flash = () => {
 
-  // set date
-  let endDate = new Date();
+  let endDate = new Date();                /* Set date */
   endDate.setFullYear(endDate.getFullYear() + 2);
+  let {data , data2} = useContext(ApiData);          /* API data */
 
 
   var renderer = ({ days, hours, minutes, seconds, completed }) => {      /* These values(props) are provided from the countdown component(installed) */
@@ -93,6 +87,8 @@ const Flash = () => {
     arrows:true,
     dots: false,
     infinite:true,
+    autoplay: true,
+    autoplaySpeed: 3000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />
   };
@@ -106,6 +102,12 @@ const Flash = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />
   };
+
+  // Client rating
+  let clientRating = Array.from({length:5},(_ , index)=>{      /* _ is for blank spaces */
+    let number = index + 0.5
+    return data2.rating > index + 1 ? <RxStarFilled/> : data2.rating > number ? <IoStarHalfOutline /> : <IoStarOutline/>
+  })
 
 
   return (
@@ -137,11 +139,12 @@ const Flash = () => {
           </div>
           <div className="py-[40px]  relative">
             <Slider {...settings}>
-              <div className="!w-[95%] font-pop">
+              {data.map((item) =>(
+                <div className="!w-[95%] font-pop">
                   <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
+                    <Link to="/shop">
                       <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
+                        <img src={item.thumbnail} alt="" />
                       </div>
                       <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
                         <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
@@ -160,351 +163,43 @@ const Flash = () => {
                         </div>
                       </div>
                     </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
+                  </div>
+                  <div className="my-[12px] ">
+                    <Link to={`${item.id}`}>
+                      <a href="" className="font-bold text-[16px] hover:underline "> 
+                        {item.title}
+                      </a>
                     </Link>
+                  </div>
+                  <div>
+                    <h3 className="font-normal text-[16px] text-red-500 items-center ">
+                    ${item.price}
+                    <span className="line-through pl-[12px] text-black ">$160</span>
+                    </h3>
+                  </div>
+                  <div className="flex gap-x-2 py-[10px] items-center">
+                    {Array.from({ length: 5 }, (_, index) => {
+                      let number = index + 0.5;
+                      return (
+                        <span key={index}>
+                          {item.rating >= index + 1 ? (
+                            <RxStarFilled />
+                          ) : item.rating >= number ? (
+                            <IoStarHalfOutline />
+                          ) : (
+                            <IoStarOutline />
+                          )}
+                        </span>
+                      );
+                    })}
+                      <h3>({item.reviews.length})</h3>
+                  </div>
                 </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
-                    </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
-                    </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
-                    </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
-                    </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
-              <div className="!w-[95%] font-pop">
-                  <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                    <Link to="/contacts">
-                      <div className="flex justify-center py-[30px] ">
-                        <img src={control} alt="" />
-                      </div>
-                      <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                      </div>
-                      <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                        <div className="absolute top-[5%] right-[5%] ">
-                          <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegHeart />
-                          </div>
-                          <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                            <FaRegEye />
-                          </div>
-                        </div>
-                        <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                          <h3>Add To Cart</h3>
-                        </div>
-                      </div>
-                    </Link>
-                </div>
-                <div className="my-[12px] ">
-                  <Link>
-                    <a href="" className="font-bold text-[16px] hover:underline "> 
-                      HAVIT HV-G92 Gamepad
-                    </a>
-                  </Link>
-                </div>
-                <div>
-                  <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                  $120
-                  <span className="line-through pl-[12px] text-black ">$160</span>
-                  </h3>
-                </div>
-                <div>
-                  {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                    {" "}
-                    {singleProduct?.reviews?.length} reviews
-                  </span> */}
-                </div>
-                <div className="flex gap-x-2 py-[10px] items-center">
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <RxStarFilled/>
-                    <IoStarHalfOutline />
-                    <IoStarOutline/>
-                    <h3>(33)</h3>
-                </div>
-              </div>
+              )) }
             </Slider>
           </div>
           <div className="py-[60px] text-center border-b-[1px] border-solid ">
-            <Link to="">
+            <Link to="/shop">
               <a href="" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  " >
                 View All Products
               </a>
@@ -570,7 +265,7 @@ const Flash = () => {
               <h3 className="font-pop font font-semibold text-black text-[36px] py-[40px] ">
                 Best Selling Products              
               </h3>
-              <Link>
+              <Link to="/shop">
                 <a href="" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  " >
                   View All
                 </a>
@@ -579,370 +274,63 @@ const Flash = () => {
             <div>
               <div className="py-[40px] relative">
                 <Slider {...settings2}>
+                  {data2.map((item) =>(
                   <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
+                    <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
+                      <Link to="/shop">
+                        <div className="flex justify-center py-[30px] ">
+                          <img src={item.thumbnail} alt="" />
+                        </div>
+                        <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
+                          <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
+                        </div>
+                        <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
+                          <div className="absolute top-[5%] right-[5%] ">
+                            <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
+                              <FaRegHeart />
                             </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
+                            <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
+                              <FaRegEye />
                             </div>
                           </div>
-                        </Link>
+                          <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
+                            <h3>Add To Cart</h3>
+                          </div>
+                        </div>
+                      </Link>
                     </div>
                     <div className="my-[12px] ">
-                      <Link>
+                      <Link to={`${item.id}`}>
                         <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
+                          {item.title}
                         </a>
                       </Link>
                     </div>
                     <div>
                       <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
+                      ${item.price}
                       <span className="line-through pl-[12px] text-black ">$160</span>
                       </h3>
                     </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
                     <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
+                      {Array.from({ length: 5 }, (_, index) => {
+                        let number = index + 0.5;
+                        return (
+                          <span key={index}>
+                            {item.rating >= index + 1 ? (
+                              <RxStarFilled />
+                            ) : item.rating >= number ? (
+                              <IoStarHalfOutline />
+                            ) : (
+                              <IoStarOutline />
+                            )}
+                          </span>
+                        );
+                      })}
+                        <h3>({item.reviews.length})</h3>
                     </div>
                   </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
-                  <div className="!w-[95%] font-pop">
-                      <div className="bg-[#F5F5F5] px-[35px] py-[40px] rounded-lg relative group cursor-pointer ">
-                        <Link to="/contacts">
-                          <div className="flex justify-center py-[30px] ">
-                            <img src={control} alt="" />
-                          </div>
-                          <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                            <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
-                          </div>
-                          <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
-                            <div className="absolute top-[5%] right-[5%] ">
-                              <div className="p-[10px] rounded-[50%] bg-white mb-[8px] cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegHeart />
-                              </div>
-                              <div className="p-[10px] rounded-[50%] bg-white cursor-pointer hover:bg-red-500 hover:text-white ease-in-out duration-300 ">
-                                <FaRegEye />
-                              </div>
-                            </div>
-                            <div className="absolute w-full bottom-0 left-0 py-[8px] rounded-b-lg font-semibold text-[16px] text-white bg-black text-center hover:underline " >
-                              <h3>Add To Cart</h3>
-                            </div>
-                          </div>
-                        </Link>
-                    </div>
-                    <div className="my-[12px] ">
-                      <Link>
-                        <a href="" className="font-bold text-[16px] hover:underline "> 
-                          HAVIT HV-G92 Gamepad
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <h3 className="font-normal text-[16px] text-red-500 items-center ">
-                      $120
-                      <span className="line-through pl-[12px] text-black ">$160</span>
-                      </h3>
-                    </div>
-                    <div>
-                      {/* <span className="font-dm font-normal text-[14px] pl-6 ">
-                        {" "}
-                        {singleProduct?.reviews?.length} reviews
-                      </span> */}
-                    </div>
-                    <div className="flex gap-x-2 py-[10px] items-center">
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <RxStarFilled/>
-                        <IoStarHalfOutline />
-                        <IoStarOutline/>
-                        <h3>(33)</h3>
-                    </div>
-                  </div>
+                  )) }
               </Slider>
               </div>     
             </div>

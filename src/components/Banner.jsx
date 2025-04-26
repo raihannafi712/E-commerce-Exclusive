@@ -7,14 +7,19 @@ import './css/banner.css';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import apple from '../assets/apple.png';
 import iphone from '../assets/ban1.png';
 import ban2 from '../assets/watch.jpg';
 import ban3 from '../assets/watch2.jpg';
 import ban4 from '../assets/head1.webp';
 import ban5 from '../assets/head2.jpg';
+import { useState } from "react";
 
 const Banner = () => {
+
+    let [categoryShow , setCategoryShow] = useState();
+
     const settings = {
         dots: true,
         arrows: false,
@@ -33,9 +38,31 @@ const Banner = () => {
                 <div className="w-[20%] ">
                     <ul className="border-r-gray-300 border-r-[1px] border-solid font-pop font-normal text-[16px] text-black pb-[0px]  ">
                         <li className='pt-[48px] py-[8px] hover:font-bold ease-in-out duration-200 '>
-                            <a href="#" className="flex items-center ">
-                                Woman’s Fashion <MdOutlineKeyboardArrowRight />
-                            </a>
+                            <p  onClick={() => setCategoryShow(!categoryShow) }
+                                className="flex items-center cursor-pointer ">
+                                Woman’s Fashion 
+                                <span>
+                                    {categoryShow == true ? <MdKeyboardArrowDown /> : <MdOutlineKeyboardArrowRight /> }
+                                </span>
+                            </p>
+                            <div className={`overflow-hidden transition-all duration-700 ${categoryShow ? "max-h-[500px]" : "max-h-0"}`}>
+                                { categoryShow && (
+                                    <ul className="ml-[20px] ">
+                                        <li className="font-pop font-normal text-[16px]">
+                                            haha
+                                        </li>
+                                        <li className="font-pop font-normal text-[16px]">
+                                            haha
+                                        </li>
+                                        <li className="font-pop font-normal text-[16px]">
+                                            haha
+                                        </li>
+                                        <li className="font-pop font-normal text-[16px]">
+                                            haha
+                                        </li>
+                                    </ul>
+                                ) }
+                            </div>
                         </li>
                         <li className=" flex py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#" className="flex items-center">
