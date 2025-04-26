@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link , NavLink  } from 'react-router-dom';
 import Container from './Container';
 import { FaRegHeart } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
@@ -23,33 +23,33 @@ const Navbar = () => {
               <li className="mx-6 py-1 ">
                 <a 
                   className="text-[#767676] font-pop font-bold text-[16px] hover:text-black duration-300 ease-in-out hover:font-bold relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-0 after:duration-300 after:ease-in-out after:h-[3px] after:bg-black hover:after:w-full ">
-                  <Link to="/">
-                    Home
-                  </Link>
+                    <NavLink to="/" className={({isActive}) => isActive ? "text-black relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-full after:h-[3px] after:bg-black " : "" } >
+                        Home
+                    </NavLink>
                 </a>
               </li>
               <li className="mx-6 py-1 ">
                 <a 
                   className="text-[#767676] font-pop font-bold text-[16px] hover:text-black duration-300 ease-in-out hover:font-bold relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-0 after:duration-300 after:ease-in-out after:h-[3px] after:bg-black hover:after:w-full ">
-                  <Link to="/contacts">
-                    Contact
-                  </Link>
+                    <NavLink to="/contacts" className={({isActive}) => isActive ? "text-black relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-full after:h-[3px] after:bg-black " : "" } >
+                        Contact
+                    </NavLink>
                 </a>
               </li>
               <li className="mx-6 py-1 ">
                 <a 
                   className="text-[#767676] font-pop font-bold text-[16px] hover:text-black duration-300 ease-in-out hover:font-bold relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-0 after:duration-300 after:ease-in-out after:h-[3px] after:bg-black hover:after:w-full ">
-                  <Link to="/about">
-                    About
-                  </Link>
+                    <NavLink to="/about" className={({isActive}) => isActive ? "text-black relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-full after:h-[3px] after:bg-black " : "" } >
+                      About
+                    </NavLink>
                 </a>
               </li>
               <li className="mx-6 py-1 ">
                 <a 
                   className="text-[#767676] font-pop font-bold text-[16px] hover:text-black duration-300 ease-in-out hover:font-bold relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-0 after:duration-300 after:ease-in-out after:h-[3px] after:bg-black hover:after:w-full ">
-                  <Link to="/signup">
-                    Sign Up
-                  </Link>
+                    <NavLink to="/signup" className={({isActive}) => isActive ? "text-black relative after:absolute after:right-0 after:bottom-[-5px] after:content-[''] after:w-full after:h-[3px] after:bg-black " : "" } >
+                        Sign Up
+                    </NavLink>
                 </a>
               </li>
             </ul>

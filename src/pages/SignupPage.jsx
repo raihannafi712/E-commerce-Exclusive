@@ -2,10 +2,48 @@ import React from "react";
 import Container from './../components/Container';
 import sign from '../assets/signup.png';
 import google from "../assets/google.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 
 
 const SignupPage = () => {
+
+  const auth = getAuth();
+  let [email , setEmail] = useState("");
+  let [password , setPassword] = useState("");
+  let navigate = useNavigate();                   /* To navigate to login page */
+  let [error , setError] = useState();
+
+
+  let handleEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+  let handlePassword = (e) =>{
+    setPassword(e.target.value);
+  }
+
+  let handleSubmit = () => {
+      if (email == "") {
+          setError("Please enter your Email!");     
+
+      } else if (password == "") {
+          setError("Please set a new password!");
+          
+      }else {
+          createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            navigate("/login")
+          console.log("done" , userCredential);         /* to check */
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setError("Email already exists!");
+          });
+      }
+  }
   return (
     <section>
       <Container>
@@ -38,31 +76,36 @@ const SignupPage = () => {
             <div>        
               <form class="max-w-md py-[48px] ">
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    <input type="name" name="floating_name" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                    <label for="floating_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                       Name
                     </label>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <input onChange={handleEmail} type="email" id="email" placeholder="" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                     <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                      Email or Phone Number
+                      Email
                     </label>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="password" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    <input type="password" onChange={handlePassword} id="password" placeholder="" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
+                    <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                       Password
                     </label>
                 </div>
+                <div>
+                  <h3 className="font-dm font-medium text-red-700 pb-[20px] ">
+                    {error}
+                  </h3>
+                </div>
                 <div className="mx-auto">
-                  <button type="submit" class=" text-white bg-red-600 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-[16px] w-full sm:w-auto px-[160px] py-[16px] text-center ease-in-out duration-300 ">
+                  <h3 onClick={handleSubmit} className="cursor-pointer text-white bg-red-600 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-[16px] w-full sm:w-auto px-[160px] py-[16px] text-center ease-in-out duration-300 ">
                     Create Account 
-                  </button>
-                  <button type="submit" class="flex gap-x-[16px] items-center my-[18px] border-black border-[1px] text-black bg-white hover:bg-black hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-[16px] w-full sm:w-auto px-[119px] py-[16px] text-center ease-in-out duration-300 ">
+                  </h3>
+                  <h3  class="flex gap-x-[16px] items-center my-[18px] border-black border-[1px] text-black bg-white hover:bg-black hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-[16px] w-full sm:w-auto px-[119px] py-[16px] text-center ease-in-out duration-300 ">
                     <img src={google} alt="" />
                     Sign up with Google
-                  </button>
+                  </h3>
                 </div>
                 <div className="flex justify-center items-center pb-[20px] ">
                     <h3 className="font-dm lg:text-[16px] text-[14px] font-medium text-black">Already a member?</h3>
