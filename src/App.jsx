@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
 import AccountPage from "./pages/AccountPage";
 import ShopPage from "./pages/ShopPage";
+import DetailsPage from "./pages/DetailsPage";
 
 let routerVar = createBrowserRouter(createRoutesFromElements(
 
@@ -25,6 +26,7 @@ let routerVar = createBrowserRouter(createRoutesFromElements(
       <Route path="/cart" element={<CartPage/>}></Route>
       <Route path="/accounts" element={<AccountPage/>}></Route>
       <Route path="/shop" element={<ShopPage/>}></Route>
+      <Route path="/shop/:id" element={<DetailsPage/>} ></Route>
     </Route>
     <Route path="*" element={<ErrorPage/>}></Route>         
   </>

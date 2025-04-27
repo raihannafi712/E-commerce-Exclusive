@@ -212,10 +212,8 @@ const Enhance = () => {
                     </Slider>
                     </div>
                     <div className="py-[60px] text-center border-b-[1px] border-solid ">
-                        <Link to="/shop">
-                        <a href="" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  " >
+                        <Link to="/shop" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
                             View All Products
-                        </a>
                         </Link>
                     </div> 
                 </div>

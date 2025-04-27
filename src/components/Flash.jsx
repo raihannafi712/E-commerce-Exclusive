@@ -147,7 +147,9 @@ const Flash = () => {
                         <img src={item.thumbnail} alt="" />
                       </div>
                       <div className="absolute top-[5%] left-[5%] font-normal text-[12px] ">
-                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">-40%</h3>
+                        <h3 className="px-[12px] py-[4px] rounded-[4px] bg-red-500 text-white ">
+                          {item.discountPercentage}%                         
+                        </h3>
                       </div>
                       <div className="w-full h-[0px] opacity-0 group-hover:h-full duration-500 ease-in-out group-hover:opacity-100 ">
                         <div className="absolute top-[5%] right-[5%] ">

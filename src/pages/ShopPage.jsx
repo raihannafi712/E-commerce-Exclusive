@@ -113,7 +113,7 @@ const Shop = () => {
                 <TiThSmallOutline />
                 Show All
               </h2>                
-              <ul  className="font-dm font-normal text-[16px] text-[#6D6D6D] my-[25px] ">
+              <ul  className="font-dm font-normal text-[16px] text-[#6D6D6D] my-[25px] h-[250px] overflow-y-scroll ">
                 {category.map((item) => (
                   <li 
                     onClick={() => handleCategory(item)} 
