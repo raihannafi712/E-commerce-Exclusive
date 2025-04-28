@@ -15,6 +15,7 @@ import ban3 from '../assets/watch2.jpg';
 import ban4 from '../assets/head1.webp';
 import ban5 from '../assets/head2.jpg';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
 
@@ -37,7 +38,7 @@ const Banner = () => {
         <Container>
             <div className="flex justify-between">
                 <div className="w-[20%] ">
-                    <ul className="border-r-gray-300 border-r-[1px] border-solid font-pop font-normal text-[16px] text-black pb-[0px]  ">
+                    <ul className="border-r-gray-300 border-r-[1px] border-solid font-pop font-medium text-[16px] text-black pb-[0px]  ">
                         <li className='pt-[48px] py-[8px] hover:font-bold ease-in-out duration-200 '>
                             <p  onClick={() => setCategoryShow(!categoryShow) }
                                 className="flex items-center cursor-pointer ">
@@ -118,7 +119,8 @@ const Banner = () => {
                     </ul>
                 </div>                    
                 <div className="w-[70%] banner">
-                    <Slider {...settings} >    
+                    <Link to="/shop">
+                        <Slider {...settings} >    
                         <div>
                             <div className="mt-[48px] bg-black flex justify-between cursor-pointer ">
                                 <div className="w-[33%] ">
@@ -173,7 +175,8 @@ const Banner = () => {
                                 </a>
                             </div>
                         </div>
-                    </Slider>
+                        </Slider>
+                    </Link>
                 </div>
             </div>
         </Container>

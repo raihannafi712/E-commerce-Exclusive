@@ -5,11 +5,13 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { ApiData } from "./ContextApi";
+import { useSelector } from "react-redux";
 
 
 const Navbar = () => {
 
-  let {data , data2 , data3} = useContext(ApiData)
+  let data = useSelector((state) => state.product.cartItem);      /* Cart icon count */
+  let { data2 , data3} = useContext(ApiData)
   let [search , setSearch] = useState('');                /* searchBar item search */
   let [searchFilter , setSearchFilter] = useState([]);    /* searchBar item search */          
   let navigate = useNavigate ();                          /* To search each product id wise */
@@ -135,9 +137,16 @@ const Navbar = () => {
                 <FaRegHeart />            
               </Link>
             </div>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer relative">
               <Link to="/cart">
                 <IoCartOutline />
+                {data.length > 0 && (
+                  <div className="absolute left-[15px] top-[-11px] w-[20px] h-[20px]  rounded-full bg-black text-white ease-in-out duration-200 ">
+                    <p className="text-center text-[12px] leading-[20px] items\ ">
+                      {data.length}
+                    </p>
+                  </div>
+                )}
               </Link>
             </div>
             <div className="cursor-pointer">
