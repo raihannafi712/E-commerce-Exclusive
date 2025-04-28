@@ -1,11 +1,44 @@
 import React from "react";
 import Container from './../components/Container';
 import { Link } from "react-router-dom";
-import c1 from '../assets/c1.png';
-import c2 from '../assets/c2.png';
+import { useDispatch, useSelector } from "react-redux";
+import { decrementProduct, incrementProduct, productRemove } from "../components/slice/ProductSlice";
+import { ImCross } from "react-icons/im";
+import { FaAngleRight , FaMinus , FaPlus   } from "react-icons/fa";
 import 'flowbite';
 
+
 const CartPage = () => {
+
+  // Add-drop product
+  let data = useSelector((state)=>state.product.cartItem);
+  console.log(data);
+  let dispatch = useDispatch();
+
+  let handleIncrement = (index) => {        /* Increasing product quantity  */
+    dispatch(incrementProduct(index));    
+  };
+
+  let handledecrement = (index) => {        /* decreasing product quantity  */
+    dispatch(decrementProduct(index));    
+  }
+   
+  let handleCross = (i) => {
+    dispatch(productRemove(i));
+  }
+
+  
+  // Total pricing
+  let {totalPrice , totalQuantity} = data.reduce((acc , item)=>{
+    acc.totalPrice += item.price * item.quantity
+    acc.totalQuantity += item.quantity
+
+    return acc
+  },{totalPrice: 0 , totalQuantity:0})
+
+  let vat = totalPrice * 15 / 100;
+
+
   return (
     <section>
       <Container>
@@ -16,6 +49,12 @@ const CartPage = () => {
             </h3>
             <span className="px-[12px] ">/</span>
           </Link>
+          <Link to="/shop" className="flex  items-center">
+            <h3 className="font-pop font-normal text-gray-500 text-[14px] cursor-pointer hover:underline ">
+              Shop
+            </h3>
+            <span className="px-[12px] ">/</span>
+          </Link>
           <Link>
             <h3 className="font-pop font-normal text-black text-[14px] cursor-pointer hover:underline ">
               Cart
@@ -23,6 +62,7 @@ const CartPage = () => {
           </Link>
         </div>
         <div>
+
           <div className="flex justify-between items-center pb-[80px] ">
             <div className="w-[15%] mx-auto">
               <h3 className="font-pop font-normal text-black text-[16px]">
@@ -45,41 +85,57 @@ const CartPage = () => {
               </h3>
             </div>
           </div>
-          <div className="flex justify-between items-center pb-[70px]">
-            <div className="w-[21%] flex justify-around items-center">
-              <img src={c1} alt="" />
-              <h3 className="font-pop font-normal text-black text-[16px]">
-                LCD Monitor
-              </h3>
-            </div>
-            <div className="w-[21%] text-center">
-              <h3 className="font-pop font-normal text-black text-[16px] text-center">
-                $650
-              </h3>
-            </div>
-            <div className="w-[21%] mx-auto ">          
-              <form class="ml-[87px] ">
-                <div class="relative flex items-center max-w-[11rem]">
-                  <button type="button" id="decrement-button" data-input-counter-decrement="bedrooms-input" className="bg-white text-black border-black border-[1px] rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                    <svg class="w-3 h-3  dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                    </svg>
-                  </button>
-                  <input type="text" id="bedrooms-input" data-input-counter data-input-counter-min="1" data-input-counter-max="5" aria-describedby="helper-text-explanation" class="bg-white text-black border-black border-[1px]  h-11 font-medium text-center text-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" value="0"/>
-                  <button type="button" id="increment-button" data-input-counter-increment="bedrooms-input" class="bg-white text-black border-black border-[1px] rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
-                    <svg class="w-3 h-3 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                  </button>
+          {data.length > 0
+            ?
+            <>
+              {data.map((item , i) => (
+                <div className="flex justify-between items-center pb-[70px]">
+                  <div className="w-[21%] flex justify-around items-center">
+                    <div onClick={()=> handleCross(item)} className="w-[10%] text-[18px] pl-5 cursor-pointer hover:text-red-500 ease-in-out duration-300 ">
+                      <ImCross />
+                    </div>
+                    <div className="w-[40%]">
+                      <img src={item.thumbnail} alt="" />
+                    </div>
+                    <div className="w-[50%]">
+                      <h3 className="font-pop font-normal text-black text-[16px]">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="w-[21%] text-center">
+                    <h3 className="font-pop font-normal text-black text-[16px] text-center">
+                      ${item.price}
+                    </h3>
+                  </div>
+                  <div className="w-[21%] mx-auto ">          
+                    <form class="ml-[50px] ">
+                      <div class="flex justify-center items-center h-[50px] border-black border-[1px] ">
+                        <h3 onClick={()=>handledecrement(i)} className=" cursor-pointer hover:text-black hover:font-bold ">
+                          <FaMinus />
+                        </h3>
+                        <h3 className="mx-[60px] text-[20px] ">
+                          {item.quantity}
+                        </h3>
+                        <h3 onClick={()=>handleIncrement(i)} className=" cursor-pointer hover:text-black hover:font-bold ">
+                          <FaPlus />
+                        </h3>
+                      </div>
+                    </form>
+                  </div>
+                  <div className="w-[21%] ">
+                    <h3 className="ml-[30px]  font-pop font-normal text-black text-[16px]">
+                      ${(item.price * item.quantity).toFixed(2)} 
+                    </h3>
+                  </div>
                 </div>
-              </form>
-            </div>
-            <div className="w-[21%] mx-auto ">
-              <h3 className="font-pop font-normal text-black text-[16px] text-center">
-                Subtotal
-              </h3>
-            </div>
-          </div>
+              ))}
+            </>
+            :
+            <h3 className="items-center py-8 text-center text-[24px] font-bold font-pop text-black">
+              No Products
+            </h3>
+          }
         </div>
         <div className="flex justify-between pt-[80px] pb-[140px]">
           <div className="w-[30%] flex justify-between items-center ">
@@ -104,7 +160,15 @@ const CartPage = () => {
                       Subtotal:
                     </h3>
                     <h4>
-                      $1750
+                      ${totalPrice.toFixed(2)}
+                    </h4>
+                  </li>
+                  <li className="flex justify-between font-pop font-normal text-black text-[16px] pb-[10px] mb-4 border-b-gray-500 border-b-[1px]  ">
+                    <h3>
+                      Vat:
+                    </h3>
+                    <h4>
+                      $ {vat.toFixed(2)}
                     </h4>
                   </li>
                   <li className="flex justify-between font-pop font-normal text-black text-[16px] pb-[10px] mb-4 border-b-gray-500 border-b-[1px]  ">
@@ -120,13 +184,13 @@ const CartPage = () => {
                       Total:
                     </h3>
                     <h4>
-                      $1750
+                      ${(totalPrice + vat).toFixed(2) }
                     </h4>
                   </li>
                 </ul>
                 <div className="text-center">
-                  <Link to="/" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
-                    Procees to checkout
+                  <Link to="/checkout" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
+                    Proceed to checkout
                   </Link>
                 </div>
               </div>

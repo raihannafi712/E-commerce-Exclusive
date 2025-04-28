@@ -10,7 +10,7 @@ const Header = () => {
           <div className="flex mx-auto gap-4">
             <h3>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!</h3>
             <div>
-              <Link>
+              <Link to="/shop">
                 <p className="cursor-pointer hover:underline font-bold ">
                   Show Now
                 </p>

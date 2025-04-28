@@ -19,6 +19,7 @@ import { useState } from "react";
 const Banner = () => {
 
     let [categoryShow , setCategoryShow] = useState();
+    let [categoryShow2 , setCategoryShow2] = useState();
 
     const settings = {
         dots: true,
@@ -48,26 +49,50 @@ const Banner = () => {
                             <div className={`overflow-hidden transition-all duration-700 ${categoryShow ? "max-h-[500px]" : "max-h-0"}`}>
                                 { categoryShow && (
                                     <ul className="ml-[20px] ">
-                                        <li className="font-pop font-normal text-[16px]">
-                                            haha
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Clothes
                                         </li>
-                                        <li className="font-pop font-normal text-[16px]">
-                                            haha
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Accessories
                                         </li>
-                                        <li className="font-pop font-normal text-[16px]">
-                                            haha
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Jewelries
                                         </li>
-                                        <li className="font-pop font-normal text-[16px]">
-                                            haha
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Makeup
                                         </li>
+
                                     </ul>
                                 ) }
                             </div>
                         </li>
-                        <li className=" flex py-[12px] hover:font-bold ease-in-out duration-200 ">
-                            <a href="#" className="flex items-center">
-                                Men’s Fashion <MdOutlineKeyboardArrowRight />
-                            </a>
+                        <li className='py-[8px] hover:font-bold ease-in-out duration-200 '>
+                            <p  onClick={() => setCategoryShow2(!categoryShow2) }
+                                className="flex items-center cursor-pointer ">
+                                Men’s Fashion 
+                                <span>
+                                    {categoryShow2 == true ? <MdKeyboardArrowDown /> : <MdOutlineKeyboardArrowRight /> }
+                                </span>
+                            </p>
+                            <div className={`overflow-hidden transition-all duration-700 ${categoryShow2 ? "max-h-[500px]" : "max-h-0"}`}>
+                                { categoryShow2 && (
+                                    <ul className="ml-[20px] ">
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Clothes
+                                        </li>
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Accessories
+                                        </li>
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Sports
+                                        </li>
+                                        <li className="py-[5px] font-pop font-normal text-[16px] cursor-pointer hover:font-bold ease-in-out duration-200">
+                                            Sunglasses
+                                        </li>
+
+                                    </ul>
+                                ) }
+                            </div>
                         </li>
                         <li className="py-[12px] hover:font-bold ease-in-out duration-200 ">
                             <a href="#">Electronics</a>
