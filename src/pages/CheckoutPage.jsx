@@ -3,8 +3,16 @@ import Container from './../components/Container';
 import { Link } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import bank from '../assets/bank.png';
+import { useDispatch, useSelector } from "react-redux";
 
 const CheckoutPage = () => {
+
+  // Add-drop product
+  let data = useSelector((state)=>state.product.cartItem);
+  // console.log(data);
+  let dispatch = useDispatch();
+
+
   return (
     <section>
       <Container>
@@ -94,10 +102,26 @@ const CheckoutPage = () => {
           </div>
           <div  className="w-[50%]">
             <div>
-              <div className="flex justify-between py-[32px] ">
-                <h3>pic</h3>
-                <h3>title</h3>
-                <h3>$559</h3>
+              <div className="justify-between mb-[80px] overflow-y-scroll h-[300px] ">
+                {data.map((item , i) => (
+                  <div className="flex justify-between items-center my-[20px] pb-[10px] border-b-black border-b-[1px] ">
+                    <div className="w-[40%] flex justify-around items-center">
+                      <div className="w-[40%]">
+                        <img src={item.thumbnail} alt="" />
+                      </div>
+                      <div className="w-[50%]">
+                        <h3 className="font-pop font-normal text-black text-[16px]">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="w-[40%] text-center">
+                      <h3 className="font-pop font-normal text-black text-[16px] text-center">
+                        ${item.price}
+                      </h3>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="font-pop font-medium text-[16px] text-black ">
                 <div className="flex justify-between items-center my-[16px] border-b-black border-b-[1px] pb-[10px] ">

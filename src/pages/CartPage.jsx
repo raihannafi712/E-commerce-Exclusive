@@ -12,7 +12,7 @@ const CartPage = () => {
 
   // Add-drop product
   let data = useSelector((state)=>state.product.cartItem);
-  console.log(data);
+  // console.log(data);
   let dispatch = useDispatch();
 
   let handleIncrement = (index) => {        /* Increasing product quantity  */
