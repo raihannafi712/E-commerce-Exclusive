@@ -62,7 +62,6 @@ const CartPage = () => {
           </Link>
         </div>
         <div>
-
           <div className="flex justify-between items-center pb-[80px] ">
             <div className="w-[15%] mx-auto">
               <h3 className="font-pop font-normal text-black text-[16px]">
@@ -144,7 +143,7 @@ const CartPage = () => {
                 <input type="email" id="email" class="bg-white text-black border-black border-[1px] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Coupon Code" required />
               </div>
             </form>
-            <Link to="/" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
+            <Link to="/cart" className="font-pop font-normal text-white px-[48px] py-[16px] bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
                 Apply Coupon
             </Link>
           </div>
