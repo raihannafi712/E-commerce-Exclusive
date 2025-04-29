@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   cartItem: localStorage.getItem("cart")? JSON.parse(localStorage.getItem("cart")) : [],
+  wishItem: localStorage.getItem("wishlist")? JSON.parse(localStorage.getItem("wishlist")) : [],
 }
 
 export const productSlice = createSlice({  
@@ -23,6 +24,16 @@ export const productSlice = createSlice({
       // state.cartItem = action.payload;
       // console.log(findProduct);
     },
+    addToWish: (state, action) => {
+      let findProduct2 = state.wishItem.findIndex(
+        (item) => item.id === action.payload.id
+      );
+    
+      if (findProduct2 === -1) {  
+        state.wishItem = [...state.wishItem, action.payload];
+        localStorage.setItem("wishlist", JSON.stringify(state.wishItem));
+      }
+    },
     incrementProduct: (state , action) => {
       state.cartItem[action.payload].quantity += 1;  
       localStorage.setItem("cart" , JSON.stringify(state.cartItem));
@@ -39,10 +50,14 @@ export const productSlice = createSlice({
       state.cartItem.splice(action.payload, 1);
       localStorage.setItem("cart" , JSON.stringify(state.cartItem));
     },
+    productRemove2: (state , action) => {
+      state.wishItem.splice(action.payload, 1);
+      localStorage.setItem("wishlist" , JSON.stringify(state.wishItem));
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addToCart , incrementProduct , decrementProduct , productRemove } = productSlice.actions
+export const { addToWish , addToCart , incrementProduct , decrementProduct , productRemove , productRemove2 } = productSlice.actions
 
 export default productSlice.reducer

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
 
   let data = useSelector((state) => state.product.cartItem);      /* Cart icon count */
+  let wishData = useSelector((state) => state.product.wishItem);      /* Cart icon count */
   let { data2 , data3} = useContext(ApiData)
   let [search , setSearch] = useState('');                /* searchBar item search */
   let [searchFilter , setSearchFilter] = useState([]);    /* searchBar item search */          
@@ -30,12 +31,12 @@ const Navbar = () => {
   // console.log(searchFilter);                   /* Show search results */
 
 
-      // searchbar itemwise link
-      let handleSingleItem = (id) =>{
-        navigate(`/shop/${id}`);
-        setSearchFilter([]);
-        setSearch('');
-    }
+  // searchbar itemwise link
+  let handleSingleItem = (id) =>{
+    navigate(`/shop/${id}`);
+    setSearchFilter([]);
+    setSearch('');
+  }
 
 
 
@@ -132,9 +133,16 @@ const Navbar = () => {
             </button>
           </div>
           <div className="w-[30%] md:order-3 flex justify-end items-center gap-5 text-[26px] ">
-            <div className="cursor-pointer">
+            <div className="cursor-pointer relative">
               <Link to="/wishlist">
-                <FaRegHeart />            
+                <FaRegHeart />     
+                {wishData.length > 0 && (
+                  <div className="absolute left-[15px] top-[-11px] w-[20px] h-[20px]  rounded-full bg-black text-white ease-in-out duration-200 ">
+                    <p className="text-center text-[12px] leading-[20px] ">
+                      {wishData.length}
+                    </p>
+                  </div>   
+                )}    
               </Link>
             </div>
             <div className="cursor-pointer relative">

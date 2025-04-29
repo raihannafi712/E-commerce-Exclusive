@@ -15,7 +15,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
-import { addToCart } from "../components/slice/ProductSlice";
+import { addToCart, addToWish } from "../components/slice/ProductSlice";
 
 
 
@@ -65,6 +65,14 @@ const DetailsPage = () => {
         toast('Added to Cart!')
         setTimeout(() => {
           navigate('/cart')
+        }, [2500])
+    }
+
+    let handleWish = (item)=>{
+        dispatch(addToWish({ ...item }));        /* quantity has been added to item details */
+        toast('Added to wishlist!')
+        setTimeout(() => {
+          navigate('/wishlist')
         }, [2500])
     }
 
@@ -152,23 +160,24 @@ const DetailsPage = () => {
                         |
                         <h3>{singleProduct.returnPolicy}</h3>
                     </div>
-                    <div className="flex justify-between items-center py-6 ">
-                        <form class="">
-                            <div class="relative flex items-center max-w-[11rem]">
-                                <button type="button" id="decrement-button" data-input-counter-decrement="bedrooms-input" className="bg-white text-black border-black border-[1px] rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                                <svg class="w-3 h-3  dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                                </svg>
-                                </button>
-                                <input type="text" id="bedrooms-input" data-input-counter data-input-counter-min="1" data-input-counter-max="5" aria-describedby="helper-text-explanation" class="bg-white text-black border-black border-[1px]  h-11 font-medium text-center text-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" value="0"/>
-                                <button type="button" id="increment-button" data-input-counter-increment="bedrooms-input" class="bg-white text-black border-black border-[1px] rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
-                                <svg class="w-3 h-3 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                                </svg>
-                                </button>
-                            </div>
-                        </form>
-                        <h3 onClick={()=> handleCart(singleProduct)} className="cursor-pointer font-pop font-normal text-white text-[16px] px-[48px] py-[10px] rounded-lg bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
+                    <div className="flex justify-around items-center py-6 ">
+                        <h3 onClick={()=> handleWish(singleProduct)} className="cursor-pointer font-pop font-normal text-white text-[16px] px-[48px] py-[10px] rounded-lg bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
+                            Add to wishlist
+                        </h3>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={2000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick={false}
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="dark"
+                            transition={Bounce}
+                        />
+                        <h3 onClick={()=> handleCart(singleProduct)} className="cursor-pointer font-pop font-normal text-white text-[16px] px-[70px] py-[10px] rounded-lg bg-[#DB4444] hover:bg-black ease-in-out duration-300  ">
                             Add to cart
                         </h3>
                         <ToastContainer
@@ -184,7 +193,6 @@ const DetailsPage = () => {
                             theme="dark"
                             transition={Bounce}
                         />
-                        <FiHeart className="text-[20px] cursor-pointer "  />
                     </div>
                     <div>
                         <div className="border-black border-[1px] rounded-lg mt-[30px] font-pop font-medium text-black text-[16px] ">
